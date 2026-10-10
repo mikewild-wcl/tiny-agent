@@ -16,9 +16,9 @@ If Ollama is not installed:
 winget install --id=Ollama.Ollama -e
 ```
 
-Initialise the workspace - you can use the -p option to specify the Python version, e.g. 3.13:
+Initialise the workspace - you can use the -p option to specify the Python version, e.g. 3.14:
 ```
-uv init -p 3.15
+uv init -p 3.14
 ```
 
 In the initial version there was no need to add packages, but to set up the virtual environment just run
@@ -32,4 +32,12 @@ code .
 ```
 
 Make sure the Python support extension is installed. Select the python interpreter - ctrl-shift-P -> Python:Select interpreter, and select the virtual environment matching .venv.
+
+### Ollama models
+
+Download models:
+```
+ollama pull gemma4:e4b
+ollama pull gemma3:12b
+```
 
