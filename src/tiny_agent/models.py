@@ -1,0 +1,44 @@
+from dataclasses import dataclass
+
+@dataclass
+class Response:
+    """Structured response from LLM calls."""
+    content: str = ''
+    reasoning: str | None = None
+    tool_call: str | None = None
+    metadata: str | None = None
+
+@dataclass
+class Step:
+    """A single step in an agent's trajectory."""
+    thought: str = ''
+    action: str | None = None
+    observation: str | None = None
+    answer: str | None = None
+    metadata: str | None = None
+
+class Trajectory:
+    """Records agent execution as a sequence of runs."""
+    def __init__(self) -> None:
+        self.runs: list[dict] = []
+
+    def initialize(self, query: str) -> None:
+        """Register a new run with the given query."""
+        self.runs.append({"query": query, "steps": []})
+
+    def add(self, response: Response, observation: str | None = None) -> None:
+        """Record a step from a Response, optionally with an observation."""
+        # Add THOUGHT
+        step = Step(
+            thought=response.reasoning or "",
+            metadata=response.metadata,
+        )
+
+        # Add ACTION/OBSERVATION or ANSWER
+        if observation is not None:
+            step.action = response.tool_call
+            step.observation = observation
+        else:
+            step.answer = response.content
+            
+        self.runs[-1]["steps"].append(step)

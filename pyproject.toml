@@ -8,12 +8,13 @@ authors = [
 ]
 requires-python = ">=3.13"
 dependencies = [
+    "dotenv>=0.9.9",
     "jupyter>=1.1.1",
     "rich>=15.0.0",
 ]
 
 [project.scripts]
-tiny-agent = "tiny_agent:main"
+tiny-agent = "tiny_agent.main:main"
 
 [build-system]
 requires = ["uv_build>=0.13.0,<0.14.0"]
