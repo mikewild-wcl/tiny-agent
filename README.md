@@ -41,3 +41,15 @@ ollama pull gemma4:e4b
 ollama pull gemma3:12b
 ```
 
+### Running
+
+Make sure that uv is up to date and that the packages are synchronized (make sure the correct path is used in the cd command):
+```
+cd c:\dev\ai\tiny-agent
+uv sync
+```
+
+Run the agent by calling:
+```
+uv run python -m tiny_agent.main
+```
