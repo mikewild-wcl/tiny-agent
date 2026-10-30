@@ -35,8 +35,11 @@ Make sure the Python support extension is installed. Select the python interpret
 
 ### Ollama models
 
-Download models:
+The default models for the application are `gemma4:e4b` and `gemma3:12b`. For machines with less than 16Gb of VRAM, `gemma4:e2b` can be used. Some of the notebooks use `gemma4:e2b`by default.
+
+**Download models:**
 ```
+ollama pull gemma4:e2b
 ollama pull gemma4:e4b
 ollama pull gemma3:12b
 ```
@@ -48,6 +51,8 @@ Make sure that uv is up to date and that the packages are synchronized (make sur
 cd c:\dev\ai\tiny-agent
 uv sync
 ```
+
+If you don't want to use the default models (`gemma4:e4b` and `gemma3:12b`), copy `.env.example` to `.env` and set the models there.
 
 Run the agent by calling:
 ```

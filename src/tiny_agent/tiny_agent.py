@@ -6,7 +6,7 @@ from .tools import Tools
 class TinyAgent:
     """A minimal agent framework,"""
 
-    def __init__(self, llm: LLM, memory: Memory, tools: Tools):
+    def __init__(self, llm: LLM, memory: Memory | None = None, tools: Tools | None = None):
         print("Initializing TinyAgent")
         self.llm = llm
         self.memory = memory
@@ -16,7 +16,8 @@ class TinyAgent:
 
     def run(self, task: str):
         """Run the agent on a task."""
-        self.memory.add("user", task)
+        if self.memory:
+            self.memory.add("user", task)
         self.trajectory.initialize(task)
         print(f"Running task: {task}")
         #print(f"Memory state: {self.memory.get_messages()}")
@@ -24,8 +25,13 @@ class TinyAgent:
 
     def _step(self, task: str):
         """Perform a single step."""
-        response = self.llm.generate(self.memory.get_messages())
-        self.memory.add("assistant", response.content)
+        if self.memory:
+            response = self.llm.generate(self.memory.get_messages())
+            self.memory.add("assistant", response.content)
+        else:
+            # Allow momory-free operation using code from the original version of TinyAgent
+            response = self.llm.generate( [{"role": "user", "content": task}])
+
         self.trajectory.add(response)
         return response.content
 
